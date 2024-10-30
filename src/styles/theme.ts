@@ -1,8 +1,8 @@
-import {Theme} from '@emotion/react';
-import {palette} from './palette';
-import {typo} from './typo';
+import {Theme} from "@emotion/react";
+import {palette} from "./palette";
+import {typo} from "./typo";
 
-export const theme: Theme = {
+export const theme = {
   palette,
   typo,
 };
