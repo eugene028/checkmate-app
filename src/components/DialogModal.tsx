@@ -1,8 +1,7 @@
 import {Dispatch, ReactNode, SetStateAction} from "react";
-import {Text} from "react-native";
 import styled from "@emotion/native";
 import {theme} from "styles/theme";
-import {Modal, StyleSheet, View, Pressable} from "react-native";
+import {Modal, StyleSheet} from "react-native";
 
 const DialogModal = ({
   open,
@@ -26,11 +25,6 @@ const DialogModal = ({
           <ModalContent onPress={e => e.stopPropagation()}>
             <ModalTitle>{title}</ModalTitle>
             {children}
-            {/* <Pressable
-              style={styles.modalButton}
-              onPress={() => setOpen(false)}>
-              <Text style={styles.buttonText}>카메라로 등록</Text>
-            </Pressable> */}
           </ModalContent>
         </ModalContainer>
       </ModalOverlay>
@@ -67,17 +61,3 @@ const ModalTitle = styled.Text`
   font-weight: 700;
   margin-bottom: 20px;
 `;
-
-const styles = StyleSheet.create({
-  modalButton: {
-    backgroundColor: theme.palette.main_300,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-});
