@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {TabNavigator} from "components/navigator/TabNavigation";
-import PermissionCamera from "components/permission/Camera";
+import CameraScreen from "screens/Camera";
 
 const Stack = createStackNavigator();
 
@@ -11,11 +11,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="TabNavigator"
+          name="Home"
           component={TabNavigator}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="PermissionCamera" component={PermissionCamera} />
+        <Stack.Screen name="PermissionCamera" component={CameraScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
