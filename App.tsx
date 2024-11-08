@@ -1,14 +1,11 @@
-import React from "react";
-import {Pressable, StyleSheet, View} from "react-native";
+import React, {useState} from "react";
+import {Pressable, StyleSheet, View, Text} from "react-native";
 import {theme} from "./src/styles/theme";
 import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import Home from "components/Home";
+import {tabScreens} from "constants/navigator";
 import DialogModal from "components/DialogModal";
-import {useState} from "react";
-import {Text} from "react-native";
-import ModalBackgroundScreen from "components/ModalBackgroundScreen";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import {TabIcon, TabLabel} from "components/navigator/TabNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,163 +15,36 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen
-          name="홈"
-          component={Home}
-          options={{
-            tabBarIcon: props => (
-              <Icon
-                name="home"
-                size={25}
-                color={
-                  props.focused
-                    ? theme.palette.main_300
-                    : theme.palette.gray_100
-                }
-              />
-            ),
-            tabBarLabel: props => {
-              return (
-                <Text
-                  style={{
-                    marginTop: -5,
-                    fontSize: 11,
-                    color: props.focused
-                      ? theme.palette.main_300
-                      : theme.palette.gray_100,
-                  }}>
-                  홈
-                </Text>
-              );
-            },
-            tabBarLabelStyle: {
-              color: theme.palette.main_300,
-            },
-          }}
-        />
-        <Tab.Screen
-          name="당뇨 예측하기"
-          component={Home}
-          options={{
-            tabBarLabel: props => {
-              return (
-                <Text
-                  style={{
-                    marginTop: -5,
-                    fontSize: 11,
-                    color: props.focused
-                      ? theme.palette.main_300
-                      : theme.palette.gray_100,
-                  }}>
-                  당뇨 예측하기
-                </Text>
-              );
-            },
-            tabBarIcon: props => (
-              <Icon
-                name="auto-graph"
-                size={25}
-                color={
-                  props.focused
-                    ? theme.palette.main_300
-                    : theme.palette.gray_100
-                }
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name=" "
-          component={() => <ModalBackgroundScreen />}
-          listeners={{
-            tabPress: e => {
-              e.preventDefault(); // 기본 네비게이션 동작 방지
-              setModalVisible(true); // 모달 열기
-            },
-          }}
-          options={{
-            tabBarStyle: {
-              position: "relative",
-            },
-            tabBarIconStyle: {
-              position: "absolute",
-              top: -30,
-              height: 70,
-              width: 70,
-              backgroundColor: "white",
-              borderRadius: 50,
-            },
-            tabBarIcon: () => (
-              <Icon
-                name="add-circle"
-                size={70}
-                color={theme.palette.main_300}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="식품 정보 보기"
-          component={Home}
-          options={{
-            tabBarLabel: props => {
-              return (
-                <Text
-                  style={{
-                    marginTop: -5,
-                    fontSize: 10,
-                    color: props.focused
-                      ? theme.palette.main_300
-                      : theme.palette.gray_100,
-                  }}>
-                  식품 정보 보기
-                </Text>
-              );
-            },
-            tabBarIcon: props => (
-              <Icon
-                name="fastfood"
-                size={25}
-                color={
-                  props.focused
-                    ? theme.palette.main_300
-                    : theme.palette.gray_100
-                }
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="내 정보 수정"
-          component={Home}
-          options={{
-            tabBarLabel: props => {
-              return (
-                <Text
-                  style={{
-                    marginTop: -5,
-                    fontSize: 10,
-                    color: props.focused
-                      ? theme.palette.main_300
-                      : theme.palette.gray_100,
-                  }}>
-                  내 정보 수정
-                </Text>
-              );
-            },
-            tabBarIcon: props => (
-              <Icon
-                name="person"
-                size={25}
-                color={
-                  props.focused
-                    ? theme.palette.main_300
-                    : theme.palette.gray_100
-                }
-              />
-            ),
-          }}
-        />
+        {tabScreens.map(
+          ({name, component, icon, label, customOptions, isModal}) => (
+            <Tab.Screen
+              key={name}
+              name={name}
+              component={component}
+              listeners={
+                isModal
+                  ? {
+                      tabPress: e => {
+                        e.preventDefault();
+                        setModalVisible(true);
+                      },
+                    }
+                  : undefined
+              }
+              options={{
+                tabBarIcon: props => (
+                  <TabIcon
+                    name={icon}
+                    size={name === " " ? 70 : 25}
+                    focused={props.focused}
+                  />
+                ),
+                tabBarLabel: props => <TabLabel {...props} label={label} />,
+                ...customOptions,
+              }}
+            />
+          )
+        )}
       </Tab.Navigator>
       <DialogModal
         setOpen={setModalVisible}
@@ -204,11 +74,17 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({
+  tabBarIconStyle: {
+    position: "absolute",
+    top: -30,
+    height: 70,
+    width: 70,
+    backgroundColor: "white",
+    borderRadius: 50,
+  },
   modalContainer: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    alignContent: "center",
     gap: 10,
   },
   plainText: {
@@ -216,8 +92,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingBottom: 15,
-    display: "flex",
-    flexDirection: "column",
     gap: 5,
   },
   primeModalButton: {

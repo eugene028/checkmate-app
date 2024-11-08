@@ -1,7 +1,5 @@
 import {Dispatch, ReactNode, SetStateAction} from "react";
-import styled from "@emotion/native";
-import {theme} from "styles/theme";
-import {Modal, StyleSheet} from "react-native";
+import {Modal, Pressable, StyleSheet, Text, View} from "react-native";
 
 const DialogModal = ({
   open,
@@ -20,44 +18,48 @@ const DialogModal = ({
       transparent={true}
       visible={open}
       onRequestClose={() => setOpen(false)}>
-      <ModalOverlay onPress={() => setOpen(false)}>
-        <ModalContainer>
-          <ModalContent onPress={e => e.stopPropagation()}>
-            <ModalTitle>{title}</ModalTitle>
+      <Pressable style={styles.modalOverlay} onPress={() => setOpen(false)}>
+        <View style={styles.modalContainer}>
+          <Pressable
+            style={styles.modalContent}
+            onPress={e => e.stopPropagation()}>
+            <Text style={styles.modalTitle}>{title}</Text>
             {children}
-          </ModalContent>
-        </ModalContainer>
-      </ModalOverlay>
+          </Pressable>
+        </View>
+      </Pressable>
     </Modal>
   );
 };
 
 export default DialogModal;
 
-const ModalOverlay = styled.Pressable`
-  flex: 1;
-  background-color: "rgba(0, 0, 0, 0.5)";
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContainer = styled.View`
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalContent = styled.Pressable`
-  width: "80%";
-  background-color: white;
-  border-radius: 20px;
-  padding: 20px;
-  align-items: "center";
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-`;
-
-const ModalTitle = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 20px;
-`;
+const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    justifyContent: "center",
+    elevation: 4,
+    shadowColor: "rgba(0, 0, 0, 0.25)",
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    marginBottom: 20,
+  },
+});
