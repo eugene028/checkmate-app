@@ -7,7 +7,8 @@
     "ios": "react-native run-ios --simulator='iPhone 15'",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "ios-device": "react-native run-ios --device '유진찡' --mode Debug"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",
