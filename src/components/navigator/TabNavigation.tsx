@@ -64,7 +64,7 @@ export const TabNavigator = () => {
             style={styles.primeModalButton}
             onPress={() => {
               setModalVisible(false);
-              navigation.navigate("PermissionCamera");
+              navigation.navigate("식품 사진 촬영");
             }}>
             <Text style={styles.buttonText}>카메라로 등록</Text>
           </Pressable>

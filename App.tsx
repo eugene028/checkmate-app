@@ -15,7 +15,7 @@ const App = () => {
           component={TabNavigator}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="PermissionCamera" component={CameraScreen} />
+        <Stack.Screen name="식품 사진 촬영" component={CameraScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
