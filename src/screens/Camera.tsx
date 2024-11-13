@@ -42,7 +42,12 @@ const CameraScreen = () => {
               onPress={() => setImageSource("")}>
               <Text style={styles.textColor}>다시 찍기</Text>
             </Pressable>
-            <Pressable style={styles.primaryButton}>
+            <Pressable
+              style={styles.primaryButton}
+              onPress={() => {
+                setImageSource("");
+                navigation.navigate("식품 촬영 결과");
+              }}>
               <Text style={styles.textColor}>결과 제출하기</Text>
             </Pressable>
           </Pressable>

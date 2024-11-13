@@ -57,7 +57,10 @@ export const TabNavigator = () => {
         <View style={styles.modalContainer}>
           <Pressable
             style={styles.modalButton}
-            onPress={() => setModalVisible(false)}>
+            onPress={() => {
+              setModalVisible(false);
+              navigation.navigate("식품 직접 등록");
+            }}>
             <Text style={styles.buttonText}>직접 등록</Text>
           </Pressable>
           <Pressable
